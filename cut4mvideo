@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ -z ${1+x} ]; then
+	echo "You need to indicate the name of the mp4 file you want to use"
+	exit 2
+fi
+if [ -z ${2+x} ]; then
+	echo "You need to indicate the name of the mp4 file you want to create"
+	exit 2
+fi
+
+for i in `find . -type f -size +400000k`; do ORIGINAL=$i; CUT=`echo $i | perl -pe 's/.MP4/_.MP4/i'`; ffmpeg -i $ORIGINAL -ss 00:00:03 -t 00:04:03 -async 1 $CUT; done
